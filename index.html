@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penerimaan Negara Info</title>
+
+    <!-- Add this to <head> -->
+
+    <!-- Load required Bootstrap and BootstrapVue CSS -->
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <!-- Load the following for BootstrapVueIcons support -->
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+</head>
+<body  style="background-color:#ecd8e9;">
+<div class="" id="app" >
+<!-- navbar -->
+<div class="ml-auto">
+    <b-navbar toggleable="lg" type="light" style="background-color: #973e95;" >
+        <div class="container row">
+            <div class="row container">
+                <div class="col-1"></div>
+                <div class="col-8">
+                    <b-navbar-brand style="color: white;" href="#" v-b-toggle.sidebar-no-header >INFO BAYAR MPN</b-navbar-brand>
+                </div>
+                <div class="col-3">
+                    <b-form-input v-model="cari" class="mr-sm-2" placeholder="Search"></b-form-input>
+                </div>
+            </div>
+            
+            
+            
+        
+            
+
+
+        
+
+        </div>
+    </b-navbar>
+</div>
+<!-- navbar -->
+
+<!-- sidebar -->
+<template>
+    <div>
+      <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+        <template #default="{ hide }">
+          <div class="p-3">
+            <h4 id="sidebar-no-header-title" @click="hide">INFO BAYAR MPN</h4>
+            <p>
+              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+              in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+            </p>
+            <nav class="mb-3">
+              <b-nav vertical>
+                <b-nav-item active @click="hide">Active</b-nav-item>
+                <b-nav-item href="#link-1" @click="hide">Link</b-nav-item>
+                <b-nav-item href="#link-2" @click="hide">Another Link</b-nav-item>
+              </b-nav>
+            </nav>
+            <b-button variant="danger" block @click="hide">Close Sidebar</b-button>
+          </div>
+        </template>
+      </b-sidebar>
+    </div>
+  </template>
+<!-- sidebar -->
+
+<div class="container">
+    <br>
+
+    <!-- {{HasilCari}} -->
+    <ul>
+        <li v-for="item,index in HasilCari" :key="item.index">
+            <!-- {{ item.nama_ca }} -->
+            <!-- <span v-if="item.atm">{{ item.atm | capitalize}}</span> -->
+            
+            <!-- <b-button  class="mb-1" @click="pilih_item(item)" v-b-modal.modal-xl variant="primary"><h5>{{item[1]}}</h5></b-button> -->
+            <b-button style="background-color: plum;" class="mb-1" @click="pilih_item(item)" v-b-modal.modal-xl  pill>{{item[1]}}</b-button>
+
+            <!-- <div >
+                <ul v-if="item[2].length >1" >
+                    <h4>ATM</h4>
+                    
+                    <li v-for="item in item[2] " :key="item.index">
+                        <span >{{item}}</span>
+                    </li>
+                </ul>
+                <ul v-if="item[3].length >1">
+                    <h4>Mobile</h4>
+                    
+                    <li v-for="item in item[3] " :key="item.index">
+                        <span >{{item}}</span>
+                    </li>
+                </ul>
+
+            </div> -->
+
+        </li>
+    </ul>
+
+
+    <!-- {{data2}} -->
+
+
+
+
+
+</div>
+
+<b-modal   id="modal-xl" size="xl" title="" v-if="item_terpilih != null">
+    <div class="ml-3 pl-3" style="background-color: #ecd8e9;">
+
+    
+    <div class="text-center mb-1" style="background-color: plum;">
+
+        <b-button style="background-color: plum;" class="mb-1 ml-5 mt-1"   pill><h1>{{item_terpilih[1]}}</h1></b-button>
+
+    </div>
+    <div v-if="item_terpilih[2].length > 1">
+
+        <b-button style="background-color: plum;" class="mb-1 ml-5"   pill> <h3>ATM</h3></b-button>
+
+        <ul>
+            <li v-for="item in item_terpilih[2]" :key="item.index">
+                <span >{{item}}</span>
+            </li>
+        </ul>
+    <br>
+    <hr>
+    </div>
+
+    <div v-if="item_terpilih[3].length > 1">
+        
+        <b-button style="background-color: plum;" class="mb-1 ml-5"   pill> <h3>Mobile Banking</h3></b-button>
+        <ul>
+            <li v-for="item in item_terpilih[3]" :key="item.index">
+                <span >{{item}}</span>
+            </li>
+        </ul>
+    <br>
+    <hr>
+    </div>
+
+    <div v-if="item_terpilih[4].length > 1">
+        
+        <b-button style="background-color: plum;" class="mb-1 ml-5"   pill> <h3>Internet Banking</h3></b-button>
+        <ul>
+            <li v-for="item in item_terpilih[4]" :key="item.index">
+                <span >{{item}}</span>
+            </li>
+        </ul>
+    <br>
+    <hr>
+    </div>
+
+    <div v-if="item_terpilih[5].length > 1">
+
+        <b-button style="background-color: plum;" class="mb-1 ml-5"   pill>
+            <h3>E D C</h3>
+        </b-button>
+
+        <ul>
+            <li v-for="item in item_terpilih[5]" :key="item.index">
+                <span >{{item}}</span>
+            </li>
+        </ul>
+    <br>
+    <hr>
+    </div>
+
+    <!-- {{item_terpilih}}
+    -->
+
+    </div>
+</b-modal>
+
+
+
+
+</div>
+
+
+
+<!-- ajax -->
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        -->
+
+        <!-- ajax -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- ajax -->
+
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    items: [
+      { message: 'Foo' },
+      { message: 'Bar' }
+    ],
+    data1:[],
+    item_terpilih: null,
+    cari:'',
+
+
+
+
+
+  },
+
+computed: {
+    data2(){
+        return this.data1.map(this.getAri);
+    },
+    HasilCari: function(){
+            return this.data2.filter((blog) => {
+                return blog[1].toLowerCase().match(this.cari.toLowerCase());
+            }) 
+            
+            // ||  this.data2.filter((blog) => {
+            //     return blog.detail.match(this.cari);
+            // });
+        },
+        
+        
+
+},
+
+filters: {
+  capitalize: function (value) {
+    if (!value) return ''
+    value = value.toString()
+    value.split(",")
+    return value
+  }
+},
+  methods:{
+    pilih_item(item){
+        this.item_terpilih = item;
+    },
+    getAri(item){
+        return [item.no, item.nama_ca, item.atm.split(":"), item.mobile.split(":"), item.internet.split(":"),item.edc.split(":")]
+    },
+    GetData(){
+        this.data1 = [];
+
+        // var url ="https://script.google.com/macros/s/AKfycbyc7wzSrUGxQhcBN5EfVC-rNRj3wncZJOVTWAChXtSwnrHkGjoaoI91bggme_fUOIP9/exec?action=read&table=query";
+        var url ="https://script.google.com/macros/s/AKfycbzHZtjiQUQ7Is6-qIdKOkcuP9RS-WorgoYcr5eLRnudtfYb2Kq2LR6cdUG20ptfvRjV/exec?action=read&table=ca";
+        
+
+        $.getJSON(url, function (json) {
+        // console.log(json.data);
+        app.data1 = json.data;
+        });
+      },
+  },
+
+  created(){
+        this.GetData();
+
+
+
+    }
+})
+</script>
+
+</body>
+</html>
